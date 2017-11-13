@@ -4,7 +4,7 @@
     <ClCompile Include="..\..\Source\main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\NemoGame.cpp">
+    <ClCompile Include="..\..\Source\BouncingBall.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -17,7 +17,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\NemoGame.h">
+    <ClInclude Include="..\..\Source\BouncingBall.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

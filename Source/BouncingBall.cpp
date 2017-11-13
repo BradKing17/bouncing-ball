@@ -5,22 +5,26 @@
 #include <Engine/InputEvents.h>
 #include <Engine/Sprite.h>
 
-#include "NemoGame.h"
+#include "BouncingBall.h"
 
 /**
 *   @brief   Default Constructor.
 *   @details Consider setting the game's width and height
              and even seeding the random number generator.
 */
-NemoGame::NemoGame()
+BouncingBall::BouncingBall()
 {
+	game_width = 1024;
+	game_height = 768;
+
+	
 }
 
 /**
 *   @brief   Destructor.
 *   @details Remove any non-managed memory and callbacks.
 */
-NemoGame::~NemoGame()
+BouncingBall::~BouncingBall()
 {
 	this->inputs->unregisterCallback(key_callback_id);
 	this->inputs->unregisterCallback(mouse_callback_id);
@@ -31,10 +35,10 @@ NemoGame::~NemoGame()
 		background = nullptr;
 	}
 
-	if (clownfish)
+	if (ball)
 	{
-		delete clownfish;
-		clownfish = nullptr;
+		delete ball;
+		ball = nullptr;
 	}
 }
 
@@ -45,16 +49,35 @@ NemoGame::~NemoGame()
 			 callback should also be set in the initialise function.
 *   @return  True if the game initialised correctly.
 */
-bool NemoGame::init()
+bool BouncingBall::init()
 {
+	// initialises the graphics API, check to make sure it was a success
+	if (!initAPI())
+	{
+		return false;
+	}
+
+	// disable sprite batching for simplicity 
+	renderer->setSpriteMode(ASGE::SpriteSortMode::IMMEDIATE);
+	renderer->setWindowTitle("Bouncing ball");
+	
+	toggleFPS();
+
+
+
+	// load the ball
+
+
+
+	std::srand(time(NULL));
+
 	// input handling functions
 	key_callback_id = inputs->addCallbackFnc(
-		ASGE::E_KEY, &NemoGame::keyHandler, this);
+		ASGE::E_KEY, &BouncingBall::keyHandler, this);
 	
 	mouse_callback_id =inputs->addCallbackFnc(
-		ASGE::E_MOUSE_CLICK, &NemoGame::clickHandler, this);
+		ASGE::E_MOUSE_CLICK, &BouncingBall::clickHandler, this);
 
-	spawn();
 	return true;
 }
 
@@ -68,10 +91,16 @@ bool NemoGame::init()
 *   @see     KeyEvent
 *   @return  void
 */
-void NemoGame::keyHandler(const ASGE::SharedEventData data)
+void BouncingBall::keyHandler(const ASGE::SharedEventData data)
 {
 	auto key = static_cast<const ASGE::KeyEvent*>(data.get());
-	
+
+	if (key->key == ASGE::KEYS::KEY_ENTER &&
+		key->action == ASGE::KEYS::KEY_RELEASED)
+	{
+			// set the in menu boolean to false
+			
+	}
 	if (key->key == ASGE::KEYS::KEY_ESCAPE)
 	{
 		signalExit();
@@ -88,30 +117,16 @@ void NemoGame::keyHandler(const ASGE::SharedEventData data)
 *   @see     ClickEvent
 *   @return  void
 */
-void NemoGame::clickHandler(const ASGE::SharedEventData data)
+void BouncingBall::clickHandler(const ASGE::SharedEventData data)
 {
 	auto click = static_cast<const ASGE::ClickEvent*>(data.get());
 
 	double x_pos, y_pos;
 	inputs->getCursorPos(x_pos, y_pos);
 
-	if (isInside(clownfish, x_pos, y_pos))
-	{
-		score++;
-	}
 }
 
-/**
-*   @brief   Spawns a Clownfish
-*   @details This function is used to randomly set the position
-             of the Clownfish i.e. spawn it. 
-*   @see     KeyEvent
-*   @return  void
-*/
-void NemoGame::spawn()
-{
 
-}
 
 /**
 *   @brief   Updates the scene
@@ -120,10 +135,18 @@ void NemoGame::spawn()
 		     the buffers are swapped accordingly and the image shown.
 *   @return  void
 */
-void NemoGame::update(const ASGE::GameTime& us)
+void BouncingBall::update(const ASGE::GameTime& us)
 {
 	if (!in_menu)
 	{
+		// grab the current position
+		//auto y_pos = ball->yPos();   /***Uncomment this line once you have created the ball sprite!***/
+
+		// move the ball in the upward direction, say 500pixels/sec? 
+		// delta time is measured in milliseconds, so divide by 1000 and multiply
+
+
+		// update the position of the ball
 
 	}
 }
@@ -135,34 +158,27 @@ void NemoGame::update(const ASGE::GameTime& us)
 			 swapped accordingly and the image shown.
 *   @return  void
 */
-void NemoGame::render(const ASGE::GameTime &)
+void BouncingBall::render(const ASGE::GameTime &)
 {
 	renderer->setFont(0);
 
 	if (in_menu)
 	{
-		renderer->renderText(
-			"FISH ARE FRIENDS NOT FOOD \n SELECT FOOD TO START", 
-			150, 150, 1.0, ASGE::COLOURS::DARKORANGE);
+		//render text to introduce the game
+		//ask user to press enter to start the game
+
+
 	}
 	else
 	{
 
+
+		// creates a string with the score appended
+		std::string score_str = "SCORE: " + std::to_string(score);
+
+		// renders the string. a std string is not a c string so needs to be converted hence .c_str()
+		renderer->renderText(score_str.c_str(), 850, 25, 1.0, ASGE::COLOURS::DARKORANGE);
 	}
 	
 }
 
-/**
-*   @brief   Checks to see if a click is on a sprite. 
-*   @details Create a bounding rectangle around the sprite
-             and using a point represented by x and y check
-			 to see if it resides inside the bounding box.
-*   @param   sprite The sprite to generate the box from.
-*   @param   x The x coordinate being checked.
-*   @param   y The y coordinate being checked.
-*   @return  void
-*/
-bool NemoGame::isInside(const ASGE::Sprite* sprite, float x, float y) const
-{
-	return false;
-}
