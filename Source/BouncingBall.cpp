@@ -63,10 +63,15 @@ bool BouncingBall::init()
 	
 	toggleFPS();
 
-
+	renderer->setClearColour(ASGE::COLOURS::BLACK);
 
 	// load the ball
-
+	ball = renderer->createRawSprite();
+	ball->loadTexture(".\\Resources\\Textures\\8bit_ball.png");
+	ball->width(64);
+	ball->height(64);
+	ball->xPos(512);
+	ball->yPos(374);
 
 
 	std::srand(time(NULL));
@@ -99,7 +104,7 @@ void BouncingBall::keyHandler(const ASGE::SharedEventData data)
 		key->action == ASGE::KEYS::KEY_RELEASED)
 	{
 			// set the in menu boolean to false
-			
+		in_menu = false;
 	}
 	if (key->key == ASGE::KEYS::KEY_ESCAPE)
 	{
@@ -166,12 +171,12 @@ void BouncingBall::render(const ASGE::GameTime &)
 	{
 		//render text to introduce the game
 		//ask user to press enter to start the game
-
+		renderer->renderText("Press Enter to start the game", 200, 350, 2.0, ASGE::COLOURS::WHITE);
 
 	}
 	else
 	{
-
+		renderer->renderSprite(*ball);
 
 		// creates a string with the score appended
 		std::string score_str = "SCORE: " + std::to_string(score);
