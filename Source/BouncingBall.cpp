@@ -70,9 +70,6 @@ bool BouncingBall::init()
 	ball->loadTexture(".\\Resources\\Textures\\8bit_ball.png");
 	ball->width(64);
 	ball->height(64);
-	ball->xPos(512);
-	ball->yPos(374);
-
 
 	std::srand(time(NULL));
 
