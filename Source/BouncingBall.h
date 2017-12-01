@@ -28,4 +28,5 @@ private:
 
 	bool in_menu = true;
 	int score = 0;
+	bool ball_going_up = true;
 };
