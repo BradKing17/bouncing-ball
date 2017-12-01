@@ -7,6 +7,9 @@
     <ClCompile Include="..\..\Source\BouncingBall.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -18,6 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\BouncingBall.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

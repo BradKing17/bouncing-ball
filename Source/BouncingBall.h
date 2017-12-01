@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <Engine/OGLGame.h>
+#include <Vector>
 
 /**
 *  An OpenGL Game based on ASGE.
