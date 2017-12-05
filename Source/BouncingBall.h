@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <Engine/OGLGame.h>
-#include <Vector>
+#include "Vector.h"
 
 /**
 *  An OpenGL Game based on ASGE.
@@ -29,5 +29,8 @@ private:
 
 	bool in_menu = true;
 	int score = 0;
-	bool ball_going_up = true;
+
+
+	Vector ball_direction;
+
 };

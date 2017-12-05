@@ -23,7 +23,7 @@
     <ClInclude Include="..\..\Source\BouncingBall.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Vector.h">
+    <ClInclude Include="..\..\Source\Vector.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

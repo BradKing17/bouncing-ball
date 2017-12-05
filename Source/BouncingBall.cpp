@@ -73,7 +73,14 @@ bool BouncingBall::init()
 	ball->xPos(game_width / 2);
 	ball->yPos(game_height / 2);
 
+	
+
 	std::srand(time(NULL));
+	
+	ball_direction.x = (rand() % 100) + 1;
+
+	ball_direction.y = (rand() % 100) + 1;
+
 
 	// input handling functions
 	key_callback_id = inputs->addCallbackFnc(
@@ -145,32 +152,26 @@ void BouncingBall::update(const ASGE::GameTime& us)
 	{
 		
 		// grab the current position
+		auto x_pos = ball->xPos();
 		auto y_pos = ball->yPos();  
 
-		if (y_pos >= game_height)
+		if (x_pos < game_width)
 		{
-			ball_going_up = true;
+			x_pos += ball_direction.x * (us.delta_time.count() / 1000.f);
+		
 		}
-		else if (y_pos <= 0)
+	
+		if (y_pos < game_width)
 		{
-			ball_going_up = false;
+			y_pos += ball_direction.y * (us.delta_time.count() / 1000.f);
+
 		}
-
-
-		if (ball_going_up)
-		{
 			
-			y_pos += -500 * (us.delta_time.count() / 1000.f);
-			// move the ball in the upward direction, say 500pixels/sec? 
-			// delta time is measured in milliseconds, so divide by 1000 and multiply
-		}
-		else if (!ball_going_up)
-		{
-			y_pos += 500 * (us.delta_time.count() / 1000.f);
-		}
+		
 
 		// update the position of the ball
 		ball->yPos(y_pos);
+		ball->xPos(x_pos);
 	}
 }
 
@@ -201,11 +202,11 @@ void BouncingBall::render(const ASGE::GameTime &)
 
 		// creates a string with the score appended
 		std::string score_str = "SCORE: " + std::to_string(score);
-		std::string ball_status = std::to_string(ball_going_up);
+
 		std::string ball_y_pos = std::to_string(ball->yPos());
 		// renders the string. a std string is not a c string so needs to be converted hence .c_str()
 		renderer->renderText(score_str.c_str(), 850, 25, 1.0, ASGE::COLOURS::DARKORANGE);
-		renderer->renderText(ball_status.c_str(), 850, 50, 1.0, ASGE::COLOURS::DARKORANGE);
+
 		renderer->renderText(ball_y_pos.c_str(), 850, 75, 1.0, ASGE::COLOURS::DARKORANGE);
 	}
 	
