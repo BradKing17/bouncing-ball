@@ -30,7 +30,7 @@ private:
 	bool in_menu = true;
 	int score = 0;
 
-
+	int move_speed = 50;
 	Vector ball_direction;
 
 };

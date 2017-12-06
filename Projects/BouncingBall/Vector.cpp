@@ -10,3 +10,8 @@ Vector::Vector()
 Vector::~Vector()
 {
 }
+
+void Vector::normalise()
+{
+
+}

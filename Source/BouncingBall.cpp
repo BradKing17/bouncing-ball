@@ -68,8 +68,8 @@ bool BouncingBall::init()
 	// load the ball
 	ball = renderer->createRawSprite();
 	ball->loadTexture(".\\Resources\\Textures\\8bit_ball.png");
-	ball->width(12);
-	ball->height(12);
+	ball->width(24);
+	ball->height(24);
 	ball->xPos(game_width / 2);
 	ball->yPos(game_height / 2);
 
@@ -77,9 +77,9 @@ bool BouncingBall::init()
 
 	std::srand(time(NULL));
 	
-	ball_direction.x = (rand() % 100) + 1;
+	ball_direction.x = (rand() % 10) - 5;
 
-	ball_direction.y = (rand() % 100) + 1;
+	ball_direction.y = (rand() % 10) - 5;
 
 
 	// input handling functions
@@ -155,18 +155,23 @@ void BouncingBall::update(const ASGE::GameTime& us)
 		auto x_pos = ball->xPos();
 		auto y_pos = ball->yPos();  
 
-		if (x_pos < game_width)
-		{
-			x_pos += ball_direction.x * (us.delta_time.count() / 1000.f);
-		
-		}
-	
-		if (y_pos < game_width)
-		{
-			y_pos += ball_direction.y * (us.delta_time.count() / 1000.f);
 
+
+		if (x_pos >= game_width - ball->width() || x_pos <= 0)
+		{
+			ball_direction.x *= -1;
+			score++;
 		}
-			
+
+
+		if (y_pos >= game_height - ball->height() || y_pos <= 0)
+		{
+			ball_direction.y *= -1;
+			score++;
+		}
+
+		x_pos += move_speed * ball_direction.x * (us.delta_time.count() / 1000.f);
+		y_pos += move_speed * ball_direction.y * (us.delta_time.count() / 1000.f);
 		
 
 		// update the position of the ball
@@ -211,4 +216,6 @@ void BouncingBall::render(const ASGE::GameTime &)
 	}
 	
 }
+
+
 
