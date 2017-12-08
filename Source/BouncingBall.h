@@ -31,6 +31,6 @@ private:
 	int score = 0;
 
 	int move_speed = 50;
-	Vector ball_direction;
+	Vector ball_direction{ 2,3 };
 
 };
